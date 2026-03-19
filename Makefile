@@ -5,6 +5,7 @@
 PROGRAM_NAME = main
 BUILD_DIR    = build
 PORT         = /dev/ttyUSB0
+SIZE = avr-size	
 
 MCU   = atmega328p
 F_CPU = 16000000UL
@@ -57,6 +58,9 @@ upload: $(BUILD_DIR)/$(PROGRAM_NAME).hex
 
 clean:
 	rm -rf $(BUILD_DIR)
+
+size: $(BUILD_DIR)/$(PROGRAM_NAME).elf
+	$(SIZE) --format=avr --mcu=$(MCU) $<
 
 .PHONY: all upload clean
 

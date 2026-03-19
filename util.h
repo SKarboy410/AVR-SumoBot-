@@ -2,10 +2,11 @@
 #define UTIL
 
 #include <stdint.h>
-#include <avr/io.h>
+#include <stdbool.h>
 
-#define INPUT 0
-#define OUTPUT 1
-
+typedef enum{
+    INPUT=1,
+    OUTPUT=0
+} gpio_dir_t;
 
 #endif 

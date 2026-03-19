@@ -20,12 +20,6 @@ pinmap_t pin_table[15] = {
 
 };
 
-void gpio_init(void){
-    PORTB = 0;
-    PORTC = 0;
-    PORTD = 0;
-}
-
 void gpio_set(uint8_t pin, uint8_t dir){
     pinmap_t *p = &pin_table[pin];
     if(dir == OUTPUT)
@@ -46,12 +40,12 @@ void gpio_write(uint8_t pin,uint8_t val){
 
 void gpio_toggle(uint8_t pin){
     pinmap_t *p = &pin_table[pin];
-    *p->pin_reg = p->bitmask;
+    *p->port ^= p->bitmask;
 }
 
 uint8_t gpio_read(uint8_t pin){
     pinmap_t *p = &pin_table[pin];
-    return ((*p->port & p->bitmask)!=0);
+    return ((*p->pin_reg & p->bitmask)!=0);
 }
 
 
