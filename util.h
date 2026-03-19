@@ -9,4 +9,9 @@ typedef enum{
     OUTPUT=0
 } gpio_dir_t;
 
+typedef enum{
+    HIGH = 1,
+    LOW = 0
+} gpio_write_t;
+
 #endif 

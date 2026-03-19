@@ -6,12 +6,14 @@
 #include <avr/interrupt.h>
 
 #define clockCyclesPerMicrosecond() (F_CPU/1000000UL)
-#define clockCylesToMicrosecond(a) ((a)/clockCyclesPerMicrosecond())
+#define clockCyclesToMicrosecond(a) ((a)/clockCyclesPerMicrosecond())
 #define microsecondsToClockCycles(a) ((a)*clockCyclesPerMicrosecond())
 
 
 //timer 0
 void timer0_init(void);
-void delay_ms(uint64_t delay);
+bool delay_ms(uint64_t delay);
 uint64_t millis(void);
+void delay_blocking_ms(uint64_t delay);
+
 #endif
