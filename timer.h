@@ -1,7 +1,6 @@
-#ifndef TIMER
-#define TIMER
+#ifndef TIMER_H
+#define TIMER_H
 
-#include <avr/wdt.h>
 #include "util.h"
 #include <avr/interrupt.h>
 

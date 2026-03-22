@@ -1,5 +1,5 @@
-#ifndef GPIO
-#define GPIO
+#ifndef GPIO_H
+#define GPIO_H
 
 #include "util.h"
 #include "pin_defines.h"

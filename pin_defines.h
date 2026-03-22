@@ -1,5 +1,5 @@
-#ifndef PIN_DEFINE
-#define PIN_DEFINE
+#ifndef PIN_DEFINE_H
+#define PIN_DEFINE_H
 
 #include "util.h"
 
