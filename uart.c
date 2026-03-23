@@ -87,9 +87,9 @@ void uart_putchar(char data){
     const bool tx_ongoing = !ring_buffer_empty(&tx_buffer);
     ring_buffer_put(&tx_buffer,data);
     
-    if(!tx_ongoing){
+    if(!tx_ongoing){    
         uart_tx_start();
-        UCSR0B |= (1<<UDRIE0);
+        UCSR0B |= (1<<UDRIE0); // enable interrupts
 
     }    
     SREG = old;
@@ -114,4 +114,8 @@ void printByte(uint8_t data){
   uart_putchar('0' + (data % 10));
 }
 
-
+void printNum(uint16_t data){
+  uart_putchar((data / 100)+'0');      
+  uart_putchar(((data / 10) % 10)+'0');                      
+  uart_putchar((data % 10)+'0');
+}

@@ -60,7 +60,7 @@ uint64_t millis() {
     return (((m << 8) + t) * 64ULL) / clockCyclesPerMicrosecond() / 1000;
 }
 
-
+//non blocking delay
 bool delay_ms(uint64_t delay)
 {
     static uint64_t start = 0;
@@ -83,13 +83,16 @@ bool delay_ms(uint64_t delay)
     return false;
 }
 
-void delay_blocking_ms(uint64_t delay){
-    uint64_t start = millis();
 
-    while ((millis() - start) < delay){
-        asm volatile("nop");
-    }
-}
+// blocking delay, suspends cpu for delay
+
+// void delay_blocking_ms(uint64_t delay){
+//     uint64_t start = millis();
+
+//     while ((millis() - start) < delay){
+//         asm volatile("nop");
+//     }
+// }
 
 
 

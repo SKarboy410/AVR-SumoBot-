@@ -32,6 +32,6 @@ void uart_init(void);
 void uart_putchar(char data);
 void printStr(const char str[]);
 void printByte(uint8_t data);
-
+void printNum(uint16_t data);
 
 #endif

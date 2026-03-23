@@ -13,6 +13,6 @@
 void timer0_init(void);
 bool delay_ms(uint64_t delay);
 uint64_t millis(void);
-void delay_blocking_ms(uint64_t delay);
+// void delay_blocking_ms(uint64_t delay);
 
 #endif
