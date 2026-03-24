@@ -4,8 +4,10 @@
 
 PROGRAM_NAME = main
 BUILD_DIR    = build
+SRC_DIR      = src
+
 PORT         = /dev/ttyUSB0
-SIZE = avr-size	
+SIZE         = avr-size
 
 MCU   = atmega328p
 F_CPU = 16000000UL
@@ -21,13 +23,13 @@ LDFLAGS = -mmcu=$(MCU)
 # Automatically detect files
 # ==============================
 
-# All .c files in current directory
-SRCS := $(wildcard *.c)
+# All .c files in src directory
+SRCS := $(wildcard $(SRC_DIR)/*.c)
 
-# Convert to build/*.o
-OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
+# Convert to build/*.o (flattened)
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 
-# Dependency files generated automatically
+# Dependency files
 DEPS := $(OBJS:.o=.d)
 
 # ==============================
@@ -36,12 +38,12 @@ DEPS := $(OBJS:.o=.d)
 
 all: $(BUILD_DIR)/$(PROGRAM_NAME).elf $(BUILD_DIR)/$(PROGRAM_NAME).hex
 
-# Create build folder if missing
+# Create build folder
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-# Compile .c → build/.o
-$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+# Compile src/*.c → build/*.o
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Link
@@ -64,5 +66,5 @@ size: $(BUILD_DIR)/$(PROGRAM_NAME).elf
 
 .PHONY: all upload clean
 
-# Include auto-generated dependency files
--include $(DEPS)										
+# Include dependencies
+-include $(DEPS)
