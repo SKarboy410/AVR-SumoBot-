@@ -4,8 +4,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include <avr/io.h>
-
 typedef enum{
     INPUT=1,
     OUTPUT=0

@@ -1,14 +1,15 @@
 #include "gpio.h"
 #include "timer.h"
 #include "uart.h"
+#include "pwm.h"
+
+#include <util/delay.h>
 
 int main(){
-    timer0_init();    
-    uart_init();
-    gpio_set(LED_BUILTIN, OUTPUT);
+    pwm_init();
     while(1){
-        if(delay_ms(1000))
-            gpio_toggle(LED_BUILTIN);
+        pwm_set_duty_cycle(MOTOR1_EN,1);
+        pwm_set_duty_cycle(MOTOR2_EN,69);
         
     }
     

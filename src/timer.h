@@ -2,7 +2,6 @@
 #define TIMER_H
 
 #include "util.h"
-#include <avr/interrupt.h>
 
 #define clockCyclesPerMicrosecond() (F_CPU/1000000UL)
 #define clockCyclesToMicrosecond(a) ((a)/clockCyclesPerMicrosecond())

@@ -1,5 +1,7 @@
 #include "timer.h"
 
+#include <avr/interrupt.h>
+
 //timer 0
 
 #define MICROSECONDS_PER_TIMER0_OVF (clockCyclesToMicrosecond(64*256)) // 1024  
