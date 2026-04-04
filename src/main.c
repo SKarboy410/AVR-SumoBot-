@@ -1,18 +1,16 @@
 #include "gpio.h"
 #include "timer.h"
 #include "uart.h"
-#include "pwm.h"
+#include "motor.h"
+#include "ir.h"
 
-#include <util/delay.h>
 
 int main(){
-    pwm_init();
+    motor_init();
     while(1){
-        pwm_set_duty_cycle(MOTOR1_EN,1);
-        pwm_set_duty_cycle(MOTOR2_EN,69);
-        
+        motor_right(FORWARD,100);
+        motor_left(REVERSE,100);
     }
     
     return 0;
-    
 }

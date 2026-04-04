@@ -5,6 +5,6 @@
 #include "gpio.h"
 
 void pwm_init();
-void pwm_set_duty_cycle(gpio_pin_t pwm,float duty_cycle_percent);
+void pwm_set_duty_cycle(gpio_pin_t pwm,uint8_t percent);
 
 #endif

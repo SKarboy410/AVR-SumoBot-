@@ -79,8 +79,6 @@ void uart_init(void){
 
 void uart_putchar(char data){
 
-    while(ring_buffer_full(&tx_buffer));
-
     uint8_t old = SREG;
     cli();
 
