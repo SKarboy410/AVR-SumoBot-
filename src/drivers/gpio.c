@@ -18,7 +18,7 @@ pinmap_t pin_table[15] = {
     [MOTOR2_DIR1] = {&DDRD,&PORTD,&PIND,(1<<PD6)}, // D6
     [MOTOR2_DIR2] = {&DDRB,&PORTB,&PINB,(1<<PB4)}, // D12
     [MOTOR2_EN] = {&DDRD,&PORTD,&PIND,(1<<PD3)}, // D3
-    [LED_BUILTIN] = {&DDRB,&PORTB,&PINB,(1<<PB5)} // D13
+    [LED_BUILTIN] = {&DDRB,&PORTB,&PINB,(1<<PB5)} // D13                                                                                                                                                              
 
 };
 

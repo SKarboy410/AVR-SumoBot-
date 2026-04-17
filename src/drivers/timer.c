@@ -62,6 +62,25 @@ uint64_t millis() {
     return (((m << 8) + t) * 64ULL) / clockCyclesPerMicrosecond() / 1000;
 }
 
+uint64_t micros() {
+    uint64_t m;
+    uint8_t oldSREG, t;
+
+    oldSREG = SREG;
+    cli();
+
+    m = timer0_overflow_count;
+    t = TCNT0;
+
+    if ((TIFR0 & (1 << TOV0)) && (t < 255)) 
+        m++;
+    
+    SREG = oldSREG;
+
+    return (((m << 8) + t) * 64ULL) / clockCyclesPerMicrosecond();
+}
+
+
 //non blocking delay
 bool delay_ms(uint64_t delay)
 {
