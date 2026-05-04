@@ -2,37 +2,40 @@
 
 #define UART_BUFFER_SIZE (16)
 static uint8_t buffer[UART_BUFFER_SIZE];
-static struct ring_buffer tx_buffer = {.buffer = buffer, .size = sizeof(buffer)};
+static struct ring_buffer tx_buffer = {.buffer = buffer, .size = sizeof(buffer)}; //transmission
 
-//start uart
+//start uart transmission
 static void uart_tx_start(){
     if(!ring_buffer_empty(&tx_buffer)){
         UDR0 =  ring_buffer_peek(&tx_buffer);
     }
 }
 
+// runs everytime UDR register is empty
 ISR(USART_UDRE_vect){
-    ring_buffer_get(&tx_buffer);
+    ring_buffer_read(&tx_buffer); //read byte and move tail, byte is sent
 
     if(!ring_buffer_empty(&tx_buffer))
-        uart_tx_start();
+        uart_tx_start(); //load the rest
     else
-        UCSR0B &= ~(1<<UDRIE0); //disable interrupt
+        UCSR0B &= ~(1<<UDRIE0); //disable interrupt, stop TX
 }
 
 //ring buffer
-void ring_buffer_put(struct ring_buffer* rb, uint8_t data){
+void ring_buffer_write(struct ring_buffer* rb, uint8_t data){
     rb->buffer[rb->head] = data;
     rb->head++;
 
+    //wrap around
     if(rb->head == rb->size)
         rb->head = 0;
 }
 
-uint8_t ring_buffer_get(struct ring_buffer* rb){
+uint8_t ring_buffer_read(struct ring_buffer* rb){
     const uint8_t data = rb->buffer[rb->tail];
     rb->tail++;
-    
+
+    //wrap around
     if(rb->tail == rb->size)
         rb->tail = 0;
     
@@ -57,10 +60,10 @@ bool ring_buffer_full(const struct ring_buffer* rb){
 
 //UART 
 void uart_init(void){
+
     //set UART prescaler
     UBRR0H = UBRRH_VAL;
     UBRR0L = UBRRL_VAL;
-
 
     //uart transfer speed
     #if USE_2X
@@ -82,10 +85,10 @@ void uart_putchar(char data){
     uint8_t old = SREG;
     cli();
 
-    const bool tx_ongoing = !ring_buffer_empty(&tx_buffer);
-    ring_buffer_put(&tx_buffer,data);
+    const bool tx_ongoing = !ring_buffer_empty(&tx_buffer); // ongoing transmission
+    ring_buffer_write(&tx_buffer,data);
     
-    if(!tx_ongoing){    
+    if(!tx_ongoing){ // if not tranmission is ongoing
         uart_tx_start();
         UCSR0B |= (1<<UDRIE0); // enable interrupts
 

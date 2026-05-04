@@ -36,8 +36,8 @@ void timer0_init(){
     TCCR0A = 0;
     TCCR0B = 0;
 
-    TCCR0B |= (1<<CS01) | (1<<CS00);
-    TIMSK0 |= (1<<TOIE0);
+    TCCR0B |= (1<<CS01) | (1<<CS00); //prescaler 64
+    TIMSK0 |= (1<<TOIE0); // enable timer overflw interrupt
 
     sei();
 
@@ -54,12 +54,14 @@ uint64_t millis() {
     m = timer0_overflow_count;
     t = TCNT0;
 
+    // acounts for overflows that hasn't been counted yet
     if ((TIFR0 & (1 << TOV0)) && (t < 255)) 
         m++;
     
     SREG = oldSREG;
 
-    return (((m << 8) + t) * 64ULL) / clockCyclesPerMicrosecond() / 1000;
+    // total ticks since start to clock cycles to us to ms
+    return (((m << 8) + t) * 64ULL) / clockCyclesPerMicrosecond() / 1000; 
 }
 
 uint64_t micros() {
@@ -76,12 +78,14 @@ uint64_t micros() {
         m++;
     
     SREG = oldSREG;
-
+    
+    // total ticks since start to clock cycles to us
     return (((m << 8) + t) * 64ULL) / clockCyclesPerMicrosecond();
 }
 
 
 //non blocking delay
+// measures difference between desired time and current time
 bool delay_ms(uint64_t delay)
 {
     static uint64_t start = 0;

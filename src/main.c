@@ -24,16 +24,16 @@ int main(void) {
         if (ultrasonic_main_ready())
             front = ultrasonic_main_get_dist();
         
-        if (us[0].ready)
+        if (ultrasonic_side[0].ready)
             left = ultrasonic_side_get_dist(0);
         
-        if (us[1].ready)
+        if (ultrasonic_side[1].ready)
             right = ultrasonic_side_get_dist(1);
         
+        printStr("Front:");
         printNum(right);
-        printStr("\n");   
-    
-
+        printStr("\n");
         _delay_ms(100);
+
     }
 }

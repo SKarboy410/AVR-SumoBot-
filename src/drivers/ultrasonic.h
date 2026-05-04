@@ -11,7 +11,7 @@ typedef struct{
     uint8_t ready;
 } ultrasonic_sensor;
 
-extern volatile ultrasonic_sensor us[2];
+extern volatile ultrasonic_sensor ultrasonic_side[2];
 
 void ultrasonic_init(void);
 void ultrasonic_update(void);
