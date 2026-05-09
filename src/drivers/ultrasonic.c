@@ -18,6 +18,7 @@ static volatile uint8_t awaiting_for_echo = 0;
 
 volatile ultrasonic_sensor ultrasonic_side[2]; // for side sensors
 
+
 void ultrasonic_main_init(void){
     gpio_set(US1_TRIG,OUTPUT);
     gpio_write(US1_TRIG,LOW);

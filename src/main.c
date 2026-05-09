@@ -5,6 +5,8 @@
 #include "drivers/ir.h"
 #include "drivers/ultrasonic.h"
 
+#include "app/vision.h"
+
 #include <util/delay.h>
 #include <stdlib.h>
 
@@ -13,27 +15,23 @@ int main(void) {
     uart_init();
     ultrasonic_init();
 
-    uint16_t front = 0;
-    uint16_t left  = 0;
-    uint16_t right = 0;
-
     while (1) {
-
-        ultrasonic_update();
-      
-        if (ultrasonic_main_ready())
-            front = ultrasonic_main_get_dist();
-        
-        if (ultrasonic_side[0].ready)
-            left = ultrasonic_side_get_dist(0);
-        
-        if (ultrasonic_side[1].ready)
-            right = ultrasonic_side_get_dist(1);
-        
-        printStr("Front:");
-        printNum(right);
-        printStr("\n");
-        _delay_ms(100);
+        vision_update();
+        if(get_dist(FRONT) < 5){
+            printStr("FRONT");
+            printStr("\n");
+            _delay_ms(100);
+        }
+        else if(get_dist(LEFT) < 5){
+            printStr("LEFT");
+            printStr("\n");
+            _delay_ms(100);
+        }
+        else if(get_dist(RIGHT) < 5){
+            printStr("RIGHT");                                           
+            printStr("\n");
+            _delay_ms(100);
+        }
 
     }
 }
